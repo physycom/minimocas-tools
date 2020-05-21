@@ -1,0 +1,136 @@
+{
+  ///// cartography setup
+  "file_pro"        : "roads.pro",           // poly properties input file
+  "file_pnt"        : "roads.pnt",           // poly geometry input file
+  "file_cnt"        : "fluxes.csv",          // poly counter input file
+  "file_locations"  : "../../venice_installations/posizioni_sensori.json",  // cam location input json
+  //"file_patch"      : "patch.csv",           // network patch file
+  "explore_node"    : [ 1116 ],
+  "route_max_poi"   : 5,
+  "origin" : [
+    1350, // stazione
+    4447  // tronchetto
+  ],
+  "poi" : [
+    4944, // s.marco
+    1031, // strada nuova
+    1961, // rialto
+    83,   // ponte accademia
+    2080, // guggenheim
+    4231, // arsenale
+    1524, // campo s.margherita
+    3183  // campo del ghetto
+  ],
+  ////// functionalities
+  "enable_geojson"  : false,                 // grid spec geojson output
+  "enable_cid_dump" : false,                 // write a json containing poly cids next to cams
+  "enable_gui"      : true,                  // fltk gui
+  "frame_per_dt"    : 1,                     // control speed of animation
+  ///// simulation parameters
+  "start_date"      : "2018-09-10 00:00:00", // start date time UTC+1
+  "stop_date"       : "2018-09-11 00:00:00", // stop date time UTC+1
+  "sampling_dt"     : 20,
+  "dt"              : 10,
+  "rnd_exp_mean"    : 1000,
+  "pawns_": {
+    "rndwalk": {
+      "number"         : 0,
+      "start_node_lid" : 1350,
+      "dest"           : [ 4944, 1116, -1800, 4181 ],
+      "beta_bp_miss"   : 0.2
+    },
+    "exp.3k": {
+      "number"         : 10000,
+      "start_node_lid" : 1350,
+      "dest"           : [ 4944, 1116, -1800, 4181 ],
+      "beta_bp_miss"   : 0.2,
+      "TLB"            : 5000,
+      "crw_" : {
+        "type"   : "logistic",
+        "params" : [2.5e-3, 5000]
+      },
+      "crw" : {
+        "type"   : "exp",
+        "params" : [3000]
+      }
+    },
+    "exp.5k": {
+      "number"         : 0,
+      "start_node_lid" : 1350,
+      "dest"           : [ 4944, 1116, -1800, 4181 ],
+      "beta_bp_miss"   : 0.2,
+      "TLB"            : 10000,
+      "crw" : {
+        "type"   : "exp",
+        "params" : [5000]
+      },
+      "crw_" : {
+        "type"   : "logistic",
+        "params" : [2.5e-3, 5000]
+      }
+    }
+  },
+  "pawns_from_route" : {
+    // "bp0.0" : {
+    //   "dist_binw"    : 500,
+    //   "number"       : 1000,
+    //   "speed_mps"    : 0.9,
+    //   "beta_bp_miss" : 0.0
+    // },
+    // "bp0.1" : {
+    //   "dist_binw"    : 500,
+    //   "number"       : 1000,
+    //   "speed_mps"    : 0.9,
+    //   "beta_bp_miss" : 0.3
+    // },
+    "bp0.2" : {
+      "dist_binw"    : 500,
+      "number"       : 1000,
+      "speed_mps"    : 0.9,
+      "beta_bp_miss" : 0.5,
+      "crw" : {
+        "type"   : "exp",
+        "params" : [5000]
+      }
+    }
+    //,
+    // "bp0.5" : {
+    //   "dist_binw"    : 500,
+    //   "number"       : 1000,
+    //   "speed_mps"    : 0.9,
+    //   "beta_bp_miss" : 0.6
+    // },
+    // "bp0.7" : {
+    //   "dist_binw"    : 500,
+    //   "number"       : 1000,
+    //   "speed_mps"    : 0.9,
+    //   "beta_bp_miss" : 0.7
+    // },
+    // "bp0.9" : {
+    //   "dist_binw"    : 500,
+    //   "number"       : 1000,
+    //   "speed_mps"    : 0.9,
+    //   "beta_bp_miss" : 0.8
+    // }
+  },
+  "attractions_": {
+    "basilica": {
+      "node_lid"   : 4944,
+      "capacity"   : 5,
+      "visit_time" : 3600
+    }
+  },
+  "histo": {
+    "trip_time_max"  : 8.0,
+    "trip_time_min"  : 1.0,
+    "trip_time_binw" : 0.5,
+
+    "life_time_max"  : 24.0,
+    "life_time_min"  : 1.0,
+    "life_time_binw" : 0.5,
+
+    "cov_dist_max"   : 30000,
+    "cov_dist_min"   : 0,
+    "cov_dist_binw"  : 50
+  }
+}

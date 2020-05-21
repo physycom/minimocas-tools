@@ -1,0 +1,121 @@
+{
+  "file_pro": "cart/data/venice/venice_20200319_canals.pro",
+  "file_pnt": "cart/data/venice/venice_20200319_canals.pnt",
+  "cell_side_m": 50,
+  "enable_gui": true,
+  "sampling_dt": 900,
+  "sampling_graphics": 20,
+  "dt": 10,
+  "alpha_we": 0.01,
+  "dynamic_weights" :{
+    "mode" : "bridge_lvl",
+    "timetable": [1]
+  },
+  "attractions": {
+    "Campo San Polo": {
+      "lat": 45.4376935,
+      "lon": 12.3303509,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 900
+    },
+    "Campo della Pescaria": {
+      "lat": 45.4398563,
+      "lon": 12.3343668,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 900
+    },
+    "Biennale": {
+      "lat": 45.4322447,
+      "lon": 12.3367426,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 3600
+    },
+    "Basilica dei Frari": {
+      "lat": 45.4374964,
+      "lon": 12.3265172,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 1800
+    },
+    "San Marco": {
+      "lat": 45.4344323,
+      "lon": 12.3395635,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 3600
+    },
+    "Ponte di Rialto": {
+      "lat": 45.4384449,
+      "lon": 12.3358942,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 900
+    }
+  },
+  "start_date": "2020-02-23 00:00:00",
+  "stop_date": "2020-02-23 12:00:00",
+  "sources": {
+    "SCALZI_3_IN": {
+      "creation_dt": 20,
+      "creation_rate": [250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250],
+      "source_location": {
+        "lat" : 45.441435,
+        "lon" : 12.322556
+      },
+      "pawns_from_weight": {
+        "SCALZI_3_IN": {
+          "beta_bp_miss" : 0.5,
+          "boat_height"  : 0.5
+        }
+      }
+    }
+  },
+  "pawns" : {
+    "orig-dest_boat1" : {
+      "boat_height"    : 0.5,
+      "number"         : 1000,
+      "speed_mps"      : 0.9,
+      "beta_bp_miss"   : 0.05,
+      "start_node_lid" : 66,
+      "dest"           : [ 35, 173, -1800, 66 ]
+    },
+    "rnd-dest_boat2" : {
+      "boat_height"    : 1.5,
+      "number"         : 1000,
+      "speed_mps"      : 0.9,
+      "beta_bp_miss"   : 0.05,
+      "start_node_lid" : -1,
+      "dest"           : [ 35, 173, -1800, 66 ]
+    },
+    "dest-rnd_boat3" : {
+      "boat_height"    : 2.5,
+      "number"         : 1000,
+      "speed_mps"      : 0.9,
+      "beta_bp_miss"   : 0.05,
+      "start_node_lid" : 66,
+      "dest"           : [ -1 ]
+    },
+    "rnd-rnd_pawn" : {
+      "number"         : 1000,
+      "speed_mps"      : 0.9,
+      "beta_bp_miss"   : 0.05,
+      "start_node_lid" : -1,
+      "dest"           : [ -1 ]
+    }
+  }
+}

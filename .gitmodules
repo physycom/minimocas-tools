@@ -1,0 +1,6 @@
+[submodule "cmake"]
+	path = cmake
+	url = git@github.com:allefabbri/cmake-modules
+[submodule "test/cart"]
+	path = test/cart
+	url = git@github.com:physycom/cartography-data.git

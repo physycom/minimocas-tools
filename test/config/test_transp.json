@@ -1,0 +1,34 @@
+{
+  ///// cartography setup
+  "file_pro"        : "cart/data/venice/venice_20181003_vapoclosed.pro",           // poly properties input file
+  "file_pnt"        : "cart/data/venice/venice_20181003_vapoclosed.pnt",           // poly geometry input file
+  "file_cnt"        : "fluxes.csv",                                                // poly counter input file
+  "file_locations"  : "../../venice_installations/posizioni_sensori.json",         // cam location input json
+
+  "route_max_poi"   : 5,
+  "explore_node"    : [1456],
+  "out_basename"    : "sim",
+  "dump_state_dt"   : 1800,
+  ////// functionalities
+  "enable_geojson"  : false,                 // grid spec geojson output
+  "enable_cid_dump" : false,                 // write a json containing poly cids next to cams
+  "enable_gui"      : true,                  // fltk gui
+  ///// simulation parameters
+  "start_date"      : "2020-02-13 08:00:00", // start date time UTC+1
+  "stop_date"       : "2020-02-13 15:00:00", // stop date time UTC+1
+  "sampling_dt"     : 60,
+  "dt"              : 10,
+  "slice_transp_dt" : 3600,
+  "transport_file"  : "config/transport/vapo_info.csv",       // simulation output data basename
+  "gtfs_dir"        : "config/transport/",
+  "rnd_exp_mean"    : 1000,
+  "pawns" : {
+    "orig-dest" : {
+      "number"         : 1000,
+      "speed_mps"      : 0.9,
+      "beta_bp_miss"   : 0.5,
+      "start_node_lid" : 3891,
+      "dest"           : [ 4883, 4891, 727, -1800, 4941 ]
+    }
+  }
+}

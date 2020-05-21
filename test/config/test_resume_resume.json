@@ -1,0 +1,17 @@
+{
+  ///// cartography setup
+  "file_pro"        : "cart/data/venice/venice_20181003_vapoclosed.pro",           // poly properties input file
+  "file_pnt"        : "cart/data/venice/venice_20181003_vapoclosed.pnt",           // poly geometry input file
+  "file_cnt"        : "cart/fluxes/venice/venice_20181003_vapoclosed.fluxes",      // poly counter input file
+  "explore_node"    : [ 1456 ],
+  ////// functionalities
+  "enable_geojson"  : false,                 // grid spec geojson output
+  "enable_cid_dump" : false,                 // write a json containing poly cids next to cams
+  "enable_gui"      : true,                  // fltk gui
+  "frame_per_dt"    : 1,                     // control speed of animation
+  ///// simulation parameters
+  "sampling_dt"     : 20,
+  "dt"              : 10,
+  "duration_time"   : 3600,
+  "file_init_state" : "sim_state_180910_010000"
+}

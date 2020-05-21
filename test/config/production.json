@@ -1,0 +1,134 @@
+{
+  ///// cartography setup
+  "file_pro"       : "roads.pro",           // poly properties input file
+  "file_pnt"       : "roads.pnt",           // poly geometry input file
+  "file_cnt"       : "fluxes.csv",          // poly counter input file
+  "file_locations" : "../../venice_installations/posizioni_sensori.json",  // cam location input json
+  //"file_patch"     : "patch.csv",           // network patch file
+  "explore_poly"   : [ 6434, 4364 ],
+  ////// functionalities
+  "enable_gui"      : true,                  // fltk gui
+  "histo_" : {
+    "trip_time_max"  : 24.0, // max for trip time histo range [s]
+    "trip_time_binw" : 1.0
+  },
+  "eta" : {
+    "smarco-rialto" : { "check_poly" : [ 6434, 4364 ] },
+    "smarco-snuova" : { "check_poly" : [ 6434, 1766, 4364 ] }
+  },
+  "stats_" : {
+    "zones" : {
+      "smarco"      : { "poly_lid"  : 4364, "mask_size" : 10 },
+      "railstation" : { "poly_lid"  : 6301, "mask_size" : 20 }
+    }
+  },
+  "influx_meas_name" : "gridstate_production",
+  ///// simulation parameters
+  "start_date"      : "2018-10-01 00:00:00", // start date time UTC+1
+  "stop_date"       : "2018-10-02 00:00:00", // stop date time UTC+1
+  "sampling_dt"     : 300,
+  "dt"              : 10,
+  "duration_time"   : 999999999,
+  "transport_file"  : "vaporetti.csv",       // simulation output data basename
+  "sources" : {
+    "stazione_stnuova" : {
+      "creation_dt"   : 30,
+      "creation_rate" : [ 0, 1, 1, 2, 3, 5, 12, 20, 25, 30, 20, 15, 15, 15, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "pawns": {
+        "sourced-1": {
+          "start_poly_lid" : 6434,
+          "dest"           : [1049, 185, 4552, 4364, -7200,4552, 185, 6267 ],
+          "beta_bp_miss"   : 0.2
+        }
+      }
+    },
+    "stazione-rialto" : {
+      "creation_dt"   : 30,
+      "creation_rate" : [ 0, 1, 1, 2, 3, 5, 12, 20, 25, 30, 20, 15, 15, 15, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "pawns": {
+        "sourced-1": {
+          "start_poly_lid" : 6434,
+          "dest"           : [ 858, 5367, 4561, -3600, 5292, -3600, 6267 ],
+          "beta_bp_miss"   : 0.2
+        }
+      }
+    },
+    "stazione-accademia" : {
+      "creation_dt"   : 90,
+      "creation_rate" : [ 0, 1, 1, 2, 3, 5, 12, 20, 25, 30, 20, 15, 15, 15, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "pawns": {
+        "sourced-1": {
+          "start_poly_lid" : 6434,
+          "dest"           : [1695, 3208, 4364, -3600, 3208, -3600, 1695, 6267 ],
+          "beta_bp_miss"   : 0.2
+        }
+      }
+    },
+    "x_noise_a" : {
+      "creation_dt"   : 180,
+      "creation_rate" : [ 0, 0, 1, 2, 2, 4, 4, 6, 12, 15, 15, 10, 10, 7, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "pawns": {
+        "noisy": {
+          "start_poly_lid" : 6434,
+          "dest"           :[ 1695, 3208, 4364, -3600, 1695, 6267 ],
+          "beta_bp_miss"   : 0.95
+        }
+      }
+    },
+    "x_noise_b" : {
+      "creation_dt"   : 180,
+      "creation_rate" : [ 0, 0, 1, 2, 2, 4, 4, 6, 12, 15, 15, 10, 10, 7, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "pawns": {
+        "noisy": {
+          "start_poly_lid" : 4364,
+          "dest"           : [  5367, 858, 6434, -3600, 858, 5367, 4364 ],
+          "beta_bp_miss"   : 0.95
+        }
+      }
+    },
+    "x_noise_c" : {
+      "creation_dt"   : 180,
+      "creation_rate" : [ 0, 0, 1, 2, 2, 4, 4, 6, 12, 15, 15, 10, 10, 7, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "pawns": {
+        "noisy": {
+          "start_poly_lid" : 6434,
+          "dest"           : [1049, 185, 4552, 4364, 0 ],
+          "beta_bp_miss"   : 0.95
+        }
+      }
+    },
+    "x_noise_d" : {
+      "creation_dt"   : 180,
+      "creation_rate" : [ 0, 0, 1, 2, 2, 4, 4, 6, 12, 15, 15, 10, 10, 7, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "pawns": {
+        "noisy": {
+          "start_poly_lid" : 5801,
+          "dest"           : [4364,-3600, 0 ],
+          "beta_bp_miss"   : 0.95
+        }
+      }
+    },
+    "x_noise_egiudecca" : {
+      "creation_dt"   : 1800,
+      "creation_rate" : [ 2, 2, 3, 3, 10, 5, 3, 2, 0, 0, 0, 0 ],
+      "pawns": {
+        "noisy": {
+          "start_poly_lid" : 1459,
+          "dest"           : [ 3532, 6434 ],
+          "beta_bp_miss"   : 0.95
+        }
+      }
+    }
+  },
+  "sinks" : {
+    "stazione"      : { "poly_lid" : 6267, "despawn_timetable" : [ 300, 300, 300, 30, 30, 5 ] },
+    "bus"           : { "poly_lid" : 5183, "despawn_timetable" : [ 300, 300, 300, 30, 30, 5 ] },
+    "bus-2"         : { "poly_lid" : 6171, "despawn_timetable" : [ 300, 300, 300, 30, 30, 5 ] },
+    "car"           : { "poly_lid" : 0,    "despawn_timetable" : [ 300, 300, 300, 30, 30, 5 ] },
+    "vapo-sanMarco" : { "poly_lid" : 6001, "despawn_timetable" : [ 300, 300, 300, 30, 30, 5 ] },
+    "vapo-sanMarco" : { "poly_lid" : 6434, "despawn_timetable" : [ 0, 0, 0, 0, 30, 5 ] },
+    "vapo-sanMarco" : { "poly_lid" : 4364, "despawn_timetable" : [ 0, 0, 0, 0, 30, 5 ] },
+    "vapo-Rialto"   : { "poly_lid" : 5366, "despawn_timetable" : [ 0, 0, 0, 0, 30, 5 ] },
+    "vapo-giudecca" : { "poly_lid" : 1459, "despawn_timetable" : [ 0, 0, 0, 0, 30, 5 ] }
+  }
+}

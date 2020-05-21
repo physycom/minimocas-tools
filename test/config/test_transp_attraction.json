@@ -1,0 +1,109 @@
+{
+  ///// cartography setup
+  "file_pro"        : "cart/data/venice/venice_20181003_vapoclosed.pro",           // poly properties input file
+  "file_pnt"        : "cart/data/venice/venice_20181003_vapoclosed.pnt",           // poly geometry input file
+  "file_cnt"        : "fluxes.csv",                                                // poly counter input file
+  "file_locations"  : "../../venice_installations/posizioni_sensori.json",         // cam location input json
+  //"file_patch"      : "patch.csv",
+
+  "route_max_poi"   : 5,
+  "explore_node"    : [1456],
+  "out_basename"    : "sim",
+  "dump_state_dt"   : 1800,
+  ////// functionalities
+  "enable_geojson"  : false,                 // grid spec geojson output
+  "enable_cid_dump" : false,                 // write a json containing poly cids next to cams
+  "enable_gui"      : true,                  // fltk gui
+  ///// simulation parameters
+  "start_date"      : "2020-02-13 08:00:00", // start date time UTC+1
+  "stop_date"       : "2020-02-13 15:00:00", // stop date time UTC+1
+  "sampling_dt"     : 600,
+  "dt"              : 10,
+  "slice_transp_dt" : 3600,
+  "transport_file"  : "config/transport/physycom_20200213.txt",       // simulation output data basename
+  "gtfs_dir"        : "config/transport/",
+  "rnd_exp_mean"    : 1000,
+   "attractions": {
+    "Campo San Polo": {
+      "lat": 45.4376935,
+      "lon": 12.3303509,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 900
+    },
+    "Campo della Pescaria": {
+      "lat": 45.4398563,
+      "lon": 12.3343668,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 900
+    },
+    "Biennale": {
+      "lat": 45.4322447,
+      "lon": 12.3367426,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 3600
+    },
+    "Basilica dei Frari": {
+      "lat": 45.4374964,
+      "lon": 12.3265172,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 1800
+    },
+    "San Marco": {
+      "lat": 45.4344323,
+      "lon": 12.3395635,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 3600
+    },
+    "Ponte di Rialto": {
+      "lat": 45.4384449,
+      "lon": 12.3358942,
+      "weight": 0.5,
+      "timecap": [
+        1000
+      ],
+      "visit_time": 900
+    }
+  },
+  "sources": {
+    "SCALZI_3_IN": {
+      "creation_dt": 20,
+      "creation_rate": [250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250, 250],
+      //"creation_rate":[0, 0, 0, 0, 0, 0, 0, 250, 250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      "source_location": {
+        "lat": 45.441435,
+        "lon": 12.322556
+      },
+      "pawns_from_weight": {
+        "SCALZI_3_IN": {
+          "beta_bp_miss": 0.5,
+          "ferrypawn" : true
+        }
+      }
+    }
+  }
+  //,
+  //"pawns" : {
+  //  "orig-dest" : {
+  //    "number"         : 1000,
+  //    "speed_mps"      : 0.9,
+  //    "beta_bp_miss"   : 0.5,
+  //    "start_node_lid" : 3891,
+  //    "dest"           : [ 4883, 4891, 727, -1800, 4941 ]
+  //  }
+  //}
+}

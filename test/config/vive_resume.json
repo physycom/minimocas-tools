@@ -1,0 +1,18 @@
+{
+  ///// cartography setup
+  "file_pro"        : "roads_vapoclosed.pro",           // poly properties input file
+  "file_pnt"        : "roads_vapoclosed.pnt",           // poly geometry input file
+  "file_cnt"        : "fluxes.csv",          // poly counter input file
+  "file_locations"  : "../../venice_installations/posizioni_sensori.json",  // cam location input json
+  //"file_patch"      : "patch.csv",           // network patch file
+  "explore_poly"    : [ 6434, 4364 ],
+  ////// functionalities
+  "enable_gui"      : true,                  // fltk gui
+  "frame_per_dt"    : 1,                     // control speed of animation
+  ///// simulation parameters
+  "sampling_dt"     : 20,
+  "dt"              : 10,
+  "transport_file"  : "vaporetti.csv",       // simulation output data basename
+  "file_init_state" : "sim_state_20180910_040000",     // init from previous simulation state
+  "duration_time"   : 7200
+}

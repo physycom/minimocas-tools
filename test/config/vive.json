@@ -1,0 +1,58 @@
+{
+  ///// cartography setup
+  "file_pro"        : "roads.pro",           // poly properties input file
+  "file_pnt"        : "roads.pnt",           // poly geometry input file
+  "file_cnt"        : "fluxes.csv",          // poly counter input file
+  "file_locations"  : "../../venice_installations/posizioni_sensori.json",  // cam location input json
+  //"file_patch"      : "patch.csv",           // network patch file
+  "explore_poly"    : [ 6434, 4364 ],
+  ////// functionalities
+  "enable_geojson"  : false,                 // grid spec geojson output
+  "enable_cid_dump" : true,                  // write a json containing poly cids next to cams
+  "enable_gui"      : true,                  // fltk gui
+  "frame_per_dt"    : 1,                     // control speed of animation
+  ///// simulation parameters
+  "start_date"      : "2018-09-10 00:00:00", // start date time UTC+1
+  "stop_date"       : "2018-09-11 00:00:00", // stop date time UTC+1
+  "sampling_dt"     : 20,
+  "dt"              : 10,
+  "transport_file"  : "vaporetti.csv",       // simulation output data basename
+  "sources" : {
+    "stazione" : {
+      "creation_dt"   : 180,
+      "creation_rate" : [ 0, 200, 0, 0, 0 ],
+      "pawns": {
+        "sourced-1": {
+          "start_poly_lid" : 6434,
+          "dest"           : [ 4364, -7200, 6267 ],
+          "beta_bp_miss"   : 0.2
+        }
+      }
+    },
+    "stazione-pome" : {
+      "creation_dt"   : 180,
+      "creation_rate" : [ 0, 0, 100, 0, 0 ],
+      "pawns": {
+        "sourced-2": {
+          "start_poly_lid" : 6434,
+          "dest"           : [ 4364, -3600, 5292, -3600, 6267 ],
+          "beta_bp_miss"   : 0.2
+        }
+      }
+    },
+    "stazione-accademia" : {
+      "creation_dt"   : 180,
+      "creation_rate" : [ 1, 0, 0 ],
+      "pawns": {
+        "sourced-3": {
+          "start_poly_lid" : 6434,
+          "dest"           : [ 4364, -3600, 3208, -3600, 6267 ],
+          "beta_bp_miss"   : 0.2
+        }
+      }
+    }
+  },
+  "sinks" : {
+    "stazione" : { "poly_lid" : 6267, "despawn_timetable" : [ 600 ] }
+  }
+}
