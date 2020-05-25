@@ -53,6 +53,7 @@ int main(int argc, char** argv)
 
     // Init cart
     cart c(jconf);
+    std::cout << c.info() << std::endl;
 
     // Init simulation
     if (jconf.has_member("frame_per_dt"))
@@ -60,6 +61,7 @@ int main(int argc, char** argv)
     else
       FRAME_PER_DT = 20;
     simulation s(jconf, &c);
+    std::cout << s.info() << std::endl;
 
     // Write a json containing poly cids next to cams
     if (jconf.has_member("enable_cid_dump") && jconf["enable_cid_dump"].as<bool>())
@@ -100,6 +102,7 @@ int main(int argc, char** argv)
 
       // Display stuff
       g.run();
+      cout << "[vici] simulation done, iter " << s.iter << endl;
     }
   }
   catch (exception &e)

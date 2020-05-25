@@ -12,7 +12,7 @@
 using namespace std;
 using namespace jsoncons;
 
-constexpr int MAJOR = 1;
+constexpr int MAJOR = 2;
 constexpr int MINOR = 0;
 
 void usage(const char* progname)
@@ -23,7 +23,7 @@ void usage(const char* progname)
 
 int main(int argc, char** argv)
 {
-  cout << "SLIDES engine v" << MAJOR << "." << MINOR << endl;
+  cout << "simulation engine v" << MAJOR << "." << MINOR << endl;
 
   string conf;
   if (argc == 2)
@@ -43,9 +43,12 @@ int main(int argc, char** argv)
 
     // Init cart
     cart c(jconf);
+    std::cout << c.info() << std::endl;
 
     // init simulation
     simulation s(jconf, &c);
+    std::cout << s.info() << std::endl;
+
     s.run([&s]() {
       s.dump_net_state();
       s.dump_influxgrid();
@@ -55,9 +58,10 @@ int main(int argc, char** argv)
     [&s](){
       s.dump_state_json();
     });
+    cout << "[sim_engine] simulation done, iter " << s.iter << endl;
   }
   catch (exception &e)
   {
-    cerr << "[scr_engine] EXC: " << e.what() << endl;
+    cerr << "[sim_engine] EXC: " << e.what() << endl;
   }
 }
