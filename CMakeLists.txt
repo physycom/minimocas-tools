@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.11)
-project(minimocas)
+project(minimocas-tools)
 
 if (EXISTS "$ENV{WORKSPACE}/sysconfig/cmake/physycom_config.cmake")
   message(STATUS "Enabling physycom settings")
@@ -43,7 +43,7 @@ if(UNIX)
   set(APPEND common_libs ${CMAKE_DL_LIBS})
 endif()
 
-add_subdirectory($ENV{WORKSPACE}/minimocas minimocas)
+add_subdirectory(minimocas)
 
 if ( (UNIX OR MSVC) AND NOT APPLE )
   find_package(OpenMP)
@@ -65,9 +65,9 @@ find_package(FLTK 1.3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
 
 include_directories(
-  $ENV{WORKSPACE}/minimocas/src/lib
-  $ENV{WORKSPACE}/minimocas/src/jsoncons/include
-  $ENV{WORKSPACE}/minimocas/src/utils
+  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib
+  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/jsoncons/include
+  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/utils
   ${FLTK_INCLUDE_DIR}
 )
 
@@ -151,41 +151,15 @@ string(REPLACE "\\" "/" WORKSPACE ${WORKSPACE})
 add_subdirectory(${WORKSPACE}/pybind11 pybind11)
 pybind11_add_module(pysim
   ${CMAKE_CURRENT_LIST_DIR}/src/app/simulation_python_interface.cpp
-  ${WORKSPACE}/minimocas/src/lib/carto.cpp
-  ${WORKSPACE}/minimocas/src/lib/carto_bestpath.cpp
-  ${WORKSPACE}/minimocas/src/lib/carto_edit.cpp
-  ${WORKSPACE}/minimocas/src/lib/simulation.cpp
-  ${WORKSPACE}/minimocas/src/lib/simulation_io.cpp
-  ${WORKSPACE}/minimocas/src/lib/pawn.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/carto.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/carto_bestpath.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/carto_edit.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/simulation.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/simulation_io.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/pawn.cpp
 )
 target_link_libraries(pysim PRIVATE
   Boost::system
   Boost::filesystem
 )
 install(TARGETS pysim DESTINATION ${CMAKE_CURRENT_LIST_DIR}/bin)
-
-###############
-#### DOCS #####
-###############
-find_package(Doxygen)
-if (DOXYGEN_FOUND AND DOC_MODE)
-  set(DOXYGEN_IN ${CMAKE_CURRENT_LIST_DIR}/doc/Doxyfile.in)
-  set(DOXYGEN_OUT ${CMAKE_CURRENT_LIST_DIR}/doc/Doxyfile)
-  configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-
-  set(DOXY_HEADER ${CMAKE_CURRENT_LIST_DIR}/doc/doxy_header.tex)
-  set(DOXY_HEADER_URL https://raw.githubusercontent.com/physycom/templates/master/doxy_header.tex)
-  if(NOT EXISTS ${DOXY_HEADER})
-    message(STATUS "Retrieving Doxygen header")
-    file(DOWNLOAD ${DOXY_HEADER_URL} ${DOXY_HEADER} SHOW_PROGRESS)
-  endif()
-
-  # note the option ALL which allows to build the docs together with the application
-  add_custom_target( doxydoc ALL
-      COMMAND ${DOXYGEN_EXECUTABLE} Doxyfile
-      WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/doc
-      COMMENT "Generating API documentation with Doxygen"
-      VERBATIM )
-else (DOXYGEN_FOUND)
-  message(STATUS "Doxygen need to be installed to generate the doxygen documentation")
-endif ()

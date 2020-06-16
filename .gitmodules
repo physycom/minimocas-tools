@@ -4,3 +4,7 @@
 [submodule "test/cart"]
 	path = test/cart
 	url = git@github.com:physycom/cartography-data.git
+[submodule "minimocas"]
+	path = minimocas
+	url = git@github.com:physycom/minimocas
+	branch = master

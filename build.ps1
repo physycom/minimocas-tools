@@ -10,13 +10,13 @@ if ( $args[0] -eq "VS" )
 {
   # VS
   cmake -G "Visual Studio 15 Win64" "-DCMAKE_BUILD_TYPE=Release" $TC_FILE $VCPKG_TRIPLET ..
-  cmake --build . --config Release --target install
+  cmake --build . --config Release --parallel 8 --target install
 }
 else
 {
   # Ninja
   cmake -G "Ninja" "-DCMAKE_BUILD_TYPE=Release" $TC_FILE $VCPKG_TRIPLET ..
-  cmake --build . --config Release --target install
+  cmake --build . --config Release --parallel 8 --target install
 }
 
 Set-Location ..
