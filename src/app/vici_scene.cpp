@@ -359,7 +359,7 @@ void gui::gl_scene::draw_pawn_mark()
   auto pawn_state = pawn_history[pawn_idx];
 
   // draw pawns
-  float size = 1.f;
+  float size = 10.f;
   for (int i = 0; i < int(pawn_state.size()); ++i)
   {
     colormap(type2color[pawn_state[i].front().tag]);
