@@ -28,6 +28,9 @@ else()
   add_definitions(-Wall -Wextra -Wpedantic)
   add_definitions(-Wno-reorder -Wno-implicit-fallthrough -Wno-unused-local-typedefs)
   add_definitions(-Wno-unused-parameter -Wno-unused-function)
+  if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 9)
+    add_definitions(-Wno-maybe-uninitialized)
+  endif()
 endif()
 
 include_directories(
