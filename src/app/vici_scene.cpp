@@ -52,8 +52,8 @@ s(_s)
   int i = 0;
   for (const auto &tag : s->pawn_types)
   {
-    type2color[tag] = i++ * CMAP_LEN / int(s->pawn_types.size());
-    type2color[tag] = type2color[tag] == 0 ? 1 : type2color[tag]; // 0-index colormap is black
+    type2color[tag.first] = i++ * CMAP_LEN / int(s->pawn_types.size());
+    type2color[tag.first] = type2color[tag.first] == 0 ? 1 : type2color[tag.first]; // 0-index colormap is black
   }
 }
 

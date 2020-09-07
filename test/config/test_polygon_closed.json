@@ -43,28 +43,28 @@
   },
   "pawns" : {
     "orig-dest" : {
-      "number"         : 10000,
+      "number"         : 10,
       "speed_mps"      : 0.9,
       "beta_bp_miss"   : 0.5,
       "start_node_lid" : 3891,
       "dest"           : [ 2351, 354, -1800, 27 ]
     },
     "rnd-dest" : {
-      "number"         : 10000,
+      "number"         : 10,
       "speed_mps"      : 0.9,
       "beta_bp_miss"   : 0.0,
       "start_node_lid" : -1,
       "dest"           : [ 2351, -1800, 4181 ]
     },
     "orig-rnd" : {
-      "number"         : 10000,
+      "number"         : 10,
       "speed_mps"      : 0.9,
       "beta_bp_miss"   : 0.0,
       "start_node_lid" : 2351,
       "dest"           : -1
     },
     "rnd-rnd" : {
-      "number"         : 10000,
+      "number"         : 10,
       "speed_mps"      : 0.9,
       "beta_bp_miss"   : 0.0,
       "start_node_lid" : -1,
