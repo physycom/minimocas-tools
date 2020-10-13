@@ -138,16 +138,6 @@ target_link_libraries(miniplex
   ${common_libs}
 )
 
-add_executable(sim_engine
-  ${CMAKE_CURRENT_LIST_DIR}/src/app/sim_engine.cpp
-)
-target_link_libraries(sim_engine
-  carto
-  simulation_deps
-  Threads::Threads
-  ${common_libs}
-)
-
 set(WORKSPACE $ENV{WORKSPACE})
 string(REPLACE "\\" "/" WORKSPACE ${WORKSPACE})
 
