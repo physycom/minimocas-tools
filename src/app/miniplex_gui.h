@@ -42,8 +42,8 @@ public:
 
     inline void screen_to_coord(int &ilat, int &ilon)
     {
-      ilat = int( ((this->h() - Fl::event_y()) * 2 * dilat / this->h() - dilat) / zoom_val + ilatcen );
-      ilon = int( (Fl::event_x() * 2 * dilon / this->w() - dilon) / zoom_val + iloncen );
+      ilat = int( ((this->h() - Fl::event_y()) * 2. * dilat / this->h() - dilat) / zoom_val + ilatcen );
+      ilon = int( (Fl::event_x() * 2. * dilon / this->w() - dilon) / zoom_val + iloncen );
     }
     inline void screen_to_coord(point_base &pt) { screen_to_coord(pt.ilat, pt.ilon); }
 

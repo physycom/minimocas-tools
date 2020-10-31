@@ -77,6 +77,8 @@ int main(int argc, char** argv)
 
     // Init cart
     cart c(jconf);
+    std::cout << c.info() << std::endl;
+
     if (jconf.has_member("enable_histo") && jconf["enable_histo"].as<bool>())
     {
       // Init histos
