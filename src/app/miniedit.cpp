@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     if ( jconf.has_member("enable_remove_degree2") && jconf["enable_remove_degree2"].as<bool>() )
       c.remove_degree2();
 
-    if (jconf.has_member("enable_attach_nodes") && jconf["enable_attach_nodes"].as<bool>())
+    if ( jconf.has_member("enable_attach_nodes") && jconf["enable_attach_nodes"].as<bool>() )
     {
       c.attach_nodes();
       c.remove_degree2();
@@ -66,11 +66,14 @@ int main(int argc, char **argv)
     if ( jconf.has_member("enable_assign_level") )
       c.assign_level_ps(jconf["enable_assign_level"]["grid_file"].as<std::string>());
 
-    if (jconf.has_member("bridge_file"))
+    if ( jconf.has_member("bridge_file") )
       c.assign_level_bridge(jconf["bridge_file"].as<std::string>());
 
-    if (jconf.has_member("enable_reduction"))
+    if ( jconf.has_member("enable_reduction") )
       c.reduce_area(jconf["enable_reduction"]);
+
+    if ( jconf.has_member("subgraph_removal") )
+      c.remove_subgraph(jconf["subgraph_removal"]);
 
     c.dump_edited();
   }

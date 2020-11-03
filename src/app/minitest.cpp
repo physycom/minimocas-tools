@@ -199,6 +199,12 @@ int main(int argc, char** argv)
         for (const auto &a : p.arc) std::cout << a->lid << " " << a->p->lid << " - " << a->length << " " << a->s << " " << a->p->length << std::endl;
         break;
       }
+
+      // subgraph check
+      for (int i=0; i < int(c.node_subgra.size()); ++i)
+      {
+        std::cout << "Node " << i << " subg " << c.node_subgra[i] << std::endl;
+      }
     }
 
     if (jconf.has_member("enable_bp") && jconf["enable_bp"].as<bool>())

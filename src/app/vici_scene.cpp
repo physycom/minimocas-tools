@@ -50,8 +50,9 @@ s(_s)
 
   // pawn tag to color index map
   int i = 0;
-  for (const auto &tag : s->pawn_types)
+  for (const auto &pt : s->pawn_types)
   {
+    std::string tag = pt.first;
     type2color[tag] = i++ * CMAP_LEN / int(s->pawn_types.size());
     type2color[tag] = type2color[tag] == 0 ? 1 : type2color[tag]; // 0-index colormap is black
   }
