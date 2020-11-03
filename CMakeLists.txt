@@ -10,6 +10,8 @@ endif()
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_INSTALL_RPATH ${CMAKE_CURRENT_LIST_DIR}/bin)
+
 if (UNIX AND NOT APPLE)
   find_package(LibRt REQUIRED)
 endif()
@@ -144,15 +146,11 @@ string(REPLACE "\\" "/" WORKSPACE ${WORKSPACE})
 add_subdirectory(${WORKSPACE}/pybind11 pybind11)
 pybind11_add_module(pysim
   ${CMAKE_CURRENT_LIST_DIR}/src/app/simulation_python_interface.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/carto.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/carto_bestpath.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/carto_edit.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/simulation.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/simulation_io.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/minimocas/src/lib/pawn.cpp
 )
 target_link_libraries(pysim PRIVATE
+  simulation_deps
   Boost::system
   Boost::filesystem
 )
+
 install(TARGETS pysim DESTINATION ${CMAKE_CURRENT_LIST_DIR}/bin)

@@ -10,8 +10,6 @@ extern gui::gl_scene *scene;
 constexpr double VIEW_BLANK_BOUNDARY_FACTOR = 1.2;
 constexpr double SCROLL_TO_ZOOM = 0.125;
 
-extern std::vector<point_base> excluded; //temp added
-
 #define set_color_flux_FT glColor3d(106.f/255.f, 144.f/255.f, 200.f/255.f);
 #define set_color_flux_TF glColor3d(35.f/255.f, 230.f/255.f, 200.f/255.f);
 
@@ -52,14 +50,9 @@ s(_s)
   int i = 0;
   for (const auto &pt : s->pawn_types)
   {
-<<<<<<< HEAD
     std::string tag = pt.first;
     type2color[tag] = i++ * CMAP_LEN / int(s->pawn_types.size());
     type2color[tag] = type2color[tag] == 0 ? 1 : type2color[tag]; // 0-index colormap is black
-=======
-    type2color[tag.first] = i++ * CMAP_LEN / int(s->pawn_types.size());
-    type2color[tag.first] = type2color[tag.first] == 0 ? 1 : type2color[tag.first]; // 0-index colormap is black
->>>>>>> 94a58988a4e91eec4d7aad3213c11485e12a7f10
   }
 }
 
@@ -267,15 +260,6 @@ void gui::gl_scene::draw_node_mark()
            int(2.0 * loneps), int(2.0 * lateps),
            0.);
     }
-
-  for (const auto &e : excluded)
-  {
-    draw(e.ilon - int(0.5 * 2.0 * loneps),
-         e.ilat - int(0.5 * 2.0 * lateps),
-         int(7.0 * loneps), int(7.0 * lateps),
-         //0, 0, 0,
-         0.);
-  }
 }
 
 // grid
