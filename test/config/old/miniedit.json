@@ -1,0 +1,30 @@
+{
+  "file_pnt"       : "cart/data/venice/venice_20181003_vapoclosed.pnt",    // poly geometry input file
+  "file_pro"       : "cart/data/venice/venice_20181003_vapoclosed.pro",    // poly properties input file
+  "file_cnt"       : "cart/fluxes/venice/venice_20181003_vapoclosed.fluxes", // poly counter input file
+  //"file_polyusage" : "poly_usage_subnet.csv", // poly usage file
+  "explore_poly"   : [ 1456 ],
+  "verbose"        : false,            // cartography network information and checks (stdout)
+  "enable_histo"   : false,            // evaluate cartography stats
+  "enable_gui"     : true,             // fltk gui
+  "enable_bp"      : false,            // bestpath checks
+  "enable_geojson" : false,             // toggle grid export as geojson
+  "bp_params"      :                   // bestpath parameters
+  {
+    "numiter" : 1,                   // bestpath repetitions
+    "n_start" : 123,                 // starting node lid
+    "n_end"   : 1512,                // ending node lid
+    "pt_start" :
+    {
+      "ilat" : 45433912,             // starting point lat
+      "ilon" : 12335103              // starting point lon
+    },
+    "pt_end" :
+    {
+      "ilat" : 45434760,             // ending point lat
+      "ilon" : 12337330              // ending point lon
+    }
+  },
+  "enable_explore" : false,           // enable cartography explore, from one node to the rest (long time)
+  "bp_matrix"      : false
+}

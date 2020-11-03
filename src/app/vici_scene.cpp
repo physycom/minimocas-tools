@@ -52,9 +52,14 @@ s(_s)
   int i = 0;
   for (const auto &pt : s->pawn_types)
   {
+<<<<<<< HEAD
     std::string tag = pt.first;
     type2color[tag] = i++ * CMAP_LEN / int(s->pawn_types.size());
     type2color[tag] = type2color[tag] == 0 ? 1 : type2color[tag]; // 0-index colormap is black
+=======
+    type2color[tag.first] = i++ * CMAP_LEN / int(s->pawn_types.size());
+    type2color[tag.first] = type2color[tag.first] == 0 ? 1 : type2color[tag.first]; // 0-index colormap is black
+>>>>>>> 94a58988a4e91eec4d7aad3213c11485e12a7f10
   }
 }
 

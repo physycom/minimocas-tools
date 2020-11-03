@@ -2,7 +2,7 @@
   ///// cartography setup
   "file_pro"        : "cart/data/venice/venice_20181003_vapoclosed.pro",           // poly properties input file
   "file_pnt"        : "cart/data/venice/venice_20181003_vapoclosed.pnt",           // poly geometry input file
-  "file_cnt"        : "fluxes.csv",                                                // poly counter input file
+  "file_cnt"        : "cart/fluxes/venice/venice_20181003_vapoclosed.fluxes",                                                // poly counter input file
   "file_locations"  : "../../venice_installations/posizioni_sensori.json",         // cam location input json
 
   "route_max_poi"   : 5,

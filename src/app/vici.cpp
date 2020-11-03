@@ -50,11 +50,9 @@ int main(int argc, char** argv)
   try
   {
     jconf = json::parse_file(conf);
-
     // Init cart
     cart c(jconf);
     std::cout << c.info() << std::endl;
-
     // Init simulation
     if (jconf.has_member("frame_per_dt"))
       FRAME_PER_DT = jconf["frame_per_dt"].as<int>();

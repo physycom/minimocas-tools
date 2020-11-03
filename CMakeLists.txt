@@ -24,10 +24,13 @@ endif()
 
 if(MSVC)
   #add_definitions(/WX)
-  else()
+else()
   add_definitions(-Wall -Wextra -Wpedantic)
   add_definitions(-Wno-reorder -Wno-implicit-fallthrough -Wno-unused-local-typedefs)
   add_definitions(-Wno-unused-parameter -Wno-unused-function)
+  if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 9)
+    add_definitions(-Wno-maybe-uninitialized)
+  endif()
 endif()
 
 include_directories(
@@ -132,16 +135,6 @@ target_link_libraries(miniplex
   Threads::Threads
   ${FLTK_LIBRARIES}
   ${OPENGL_LIBRARIES}
-  ${common_libs}
-)
-
-add_executable(sim_engine
-  ${CMAKE_CURRENT_LIST_DIR}/src/app/sim_engine.cpp
-)
-target_link_libraries(sim_engine
-  carto
-  simulation_deps
-  Threads::Threads
   ${common_libs}
 )
 
