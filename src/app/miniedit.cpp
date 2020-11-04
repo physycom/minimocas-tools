@@ -61,6 +61,7 @@ int main(int argc, char **argv)
     {
       c.attach_nodes();
       c.remove_degree2();
+      c.remove_shortp();
     }
 
     if ( jconf.has_member("enable_assign_level") )
