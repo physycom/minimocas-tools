@@ -25,6 +25,11 @@ void usage(const char *progname)
 {
   "file_pro"     : "roads.pro",      // poly properties input file
   "file_pnt"     : "roads.pnt",      // poly geometry input file
+
+  "enable_merge_subgraph" : false,
+  "enable_remove_degree2" : false,
+  "enable_attach_nodes"   : false,
+  "enable_reduction"      : false
 }
 )";
 }
