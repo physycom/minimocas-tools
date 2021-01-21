@@ -471,10 +471,18 @@ void gui::gl_scene::draw_select()
   {
     try
     {
+      float size = 20.0;
       int p = std::stoi(selected.substr(1));
       glLineWidth(5.);
       glColor3d(1.f, 0.f, 0.f);
       draw(c->poly.at(p));
+      auto nF = c->poly.at(p).nF;
+      draw(nF->ilon - int(0.5 * size * loneps),
+           nF->ilat - int(0.5 * size * lateps),
+           int(size * loneps), int(size * lateps),
+           0, 255, 0,
+           0.);
+
     }
     catch (...)
     {
