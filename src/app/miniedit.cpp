@@ -81,6 +81,13 @@ int main(int argc, char **argv)
     if ( jconf.has_member("subgraph_removal") )
       c.remove_subgraph(jconf["subgraph_removal"]);
 
+    if (jconf.has_member("enable_merge_carto")){
+      auto fname = jconf["second_carto_json"].as<std::string>();
+      json jconf2 = json::parse_file(fname);
+      cart c2(jconf2);
+      merge_carto(c, c2);
+    }
+
     c.dump_edited();
   }
   catch (exception &e)
