@@ -251,10 +251,10 @@ int main(int argc, char **argv)
         basename = "ace_score";
       
       ofstream out_score(basename + ".csv");
-      out_score << "node_cid;node_lid;score" << std::endl;
+      out_score << "node_cid;node_lid;score;city" << std::endl;
       for (const auto &pg : polygons_ace)
         for (const auto &n : pg.second.node_in)
-          out_score << n->cid << ";" << n->lid << ";" << pg.second.score << std::endl;
+          out_score << n->cid << ";" << n->lid << ";" << pg.second.score<<";"<< pg.second.pro.at("COM_NAME") << std::endl;
         
       std::cout << "Score ace file dumped in: " << basename + ".csv" << std::endl;
       return 0;
