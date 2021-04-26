@@ -47,6 +47,7 @@ struct ace
   double score;
   ace() {};
   ace(const jsoncons::json &feature);
+  int winding_number_algo(const int ilat, const int ilon);
 };
 
 ace::ace(const jsoncons::json &polygonlist)
@@ -55,6 +56,32 @@ ace::ace(const jsoncons::json &polygonlist)
   {
     points.emplace_back(int(pt[1].as<double>() * 1e6), int(pt[0].as<double>() * 1e6));
   }
+}
+
+double IsLeft(const int &ilat_0, const int &ilon_0, const int &ilat_1, const int &ilon_1, const int &ilat_p, const int &ilon_p)
+{
+  return ((ilat_1 - ilat_0) * (ilon_p - ilon_0) - (ilat_p - ilat_0) * (ilon_1 - ilon_0));
+}
+
+int ace::winding_number_algo(const int ilat, const int ilon) {
+  int wn = 0;    // the  winding number counter
+  for (int i = 0; i < points.size()-1; ++i) // edge from polygon[i] to  polygon[i+1]
+  {
+    if (points[i].ilon <= ilon)
+    {
+      if (points[i+1].ilon > ilon)     // an upward crossing
+        if (IsLeft(points[i].ilat, points[i].ilon, points[i+1].ilat, points[i+1].ilon, ilat, ilon) > 0)  // P left of  edge
+          ++wn;  // have  a valid up intersect
+    }
+    else {                        // start y > P.y (no test needed)
+      if (points[i + 1].ilon <= ilon)     // a downward crossing
+        if (IsLeft(points[i].ilat, points[i].ilon, points[i + 1].ilat, points[i + 1].ilon, ilat, ilon) < 0)  // P right of  edge
+          --wn; // have  a valid down intersect
+    }
+    //cout << "wn:  " << wn << endl;
+  }
+
+  return wn;
 }
 
 int main(int argc, char **argv)
@@ -173,7 +200,7 @@ int main(int argc, char **argv)
       std::ifstream ace_pop(jconf["population_file"].as<std::string>());
       if (!ace_pop)
         throw std::runtime_error("unable to open polygons file " + jconf["population_file"].as<std::string>());
-      
+
       std::string line;
       std::getline(ace_pop, line); // skip header
 
@@ -183,7 +210,7 @@ int main(int argc, char **argv)
         std::vector<std::string> tok;
         std::string sep = ";";
         physycom::split(tok, line, sep, physycom::token_compress_off);
-        if (polygons_ace.find(tok[0])!=polygons_ace.end()){
+        if (polygons_ace.find(tok[0]) != polygons_ace.end()) {
           polygons_ace[tok[0]].population = stoi(tok[1]);
           population_total += stoi(tok[1]);
         }
@@ -192,10 +219,6 @@ int main(int argc, char **argv)
       std::cout << "totale pop     : " << population_total << std::endl;
 
       // find intersection ace-nodes
-      point_base corn_box_p;
-      corn_box_p.ilat = c.ilat_max + 10;
-      corn_box_p.ilon = c.ilon_max + 10;
-
       for (auto &pga : polygons_ace)
       {
         //assign relative score
@@ -217,8 +240,7 @@ int main(int argc, char **argv)
         c.grid.coord_to_grid(pga.second.ilat_max, pga.second.ilon_max, row_max, col_max);
         c.grid.coord_to_grid(pga.second.ilat_min, pga.second.ilon_min, row_min, col_min);
 
-
-        for (int rw = row_min; rw < row_max; ++rw) 
+        for (int rw = row_min; rw < row_max; ++rw)
         {
           for (int cl = col_min; cl < col_max; ++cl)
           {
@@ -227,39 +249,36 @@ int main(int argc, char **argv)
           }
         }
 
+
         // for each node find membership
         for (const auto &n : node_closest)
         {
-          int n_intersect = 0;
-          for (int bc = 0; bc < int(pga.second.points.size() - 1); ++bc)
-          {
-            point_base pw;
-            pw.ilat = n->ilat;
-            pw.ilon = n->ilon;
-            n_intersect += c.find_intersection(pw, corn_box_p, pga.second.points[bc], pga.second.points[bc + 1]);
-            
-          }
-          if (n_intersect > 0) pga.second.node_in.push_back(n);
+          int wn;
+          point_base pw;
+          pw.ilat = n->ilat;
+          pw.ilon = n->ilon;
+          wn = pga.second.winding_number_algo(pw.ilat, pw.ilon);
+          if (wn != 0) 
+            pga.second.node_in.push_back(n);
         }
       }
-
 
       string basename;
       if (jconf.has_member("cartout_basename"))
         basename = jconf["cartout_basename"].as<std::string>();
       else
         basename = "ace_score";
-      
+
       ofstream out_score(basename + ".csv");
       out_score << "node_cid;node_lid;score;city" << std::endl;
-      for (const auto &pg : polygons_ace)
+      for (const auto &pg : polygons_ace) {
         for (const auto &n : pg.second.node_in)
-          out_score << n->cid << ";" << n->lid << ";" << pg.second.score<<";"<< pg.second.pro.at("COM_NAME") << std::endl;
-        
+          out_score << n->cid << ";" << n->lid << ";" << pg.second.score << ";" << pg.second.pro.at("COM_NAME") << std::endl;
+      }
       std::cout << "Score ace file dumped in: " << basename + ".csv" << std::endl;
       return 0;
     }
-    
+
     c.dump_edited();
   }
   catch (exception &e)
