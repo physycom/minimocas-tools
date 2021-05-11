@@ -23,7 +23,7 @@ show_poly_cid(false), show_poly_lid(false),
 show_grid(false), show_grid_mark(false),
 show_pawn_mark(true), show_loc_mark(false), show_route_mark(false),
 animate_pawns(false), view_mode(MENU_VIEW_SIMPLE),
-show_attractions(true), show_sources(false), show_barriers(true), show_polygons(true),
+show_attractions(true), show_sources(false), show_barriers(false), show_polygons(false),
 pawn_idx(0),
 s(_s)
 {
@@ -349,7 +349,7 @@ void gui::gl_scene::draw_pawn_mark()
   auto pawn_state = pawn_history[pawn_idx];
 
   // draw pawns
-  float size = 10.f;
+  float size = 2.f;
   for (int i = 0; i < int(pawn_state.size()); ++i)
   {
     colormap(type2color[pawn_state[i].front().tag]);
@@ -466,6 +466,16 @@ void gui::gl_scene::draw_barriers()
       glLineWidth(2.);
       draw(*(b.poly));
       glPopMatrix();
+
+      // front of associated poly (temp)
+      color_palette(MAGENTA);
+      size = 4.f;
+      draw(b.poly->nF->ilon - int(0.5 * size * loneps),
+        b.poly->nF->ilat - int(0.5 * size * lateps),
+        int(size * loneps), int(size * lateps),
+        0.5);
+      color_palette(ORANGE);
+      
 
       // highlight associated node
       size = 3.f;
