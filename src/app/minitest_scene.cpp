@@ -176,10 +176,11 @@ void gui::gl_scene::draw_cart()
         //case ONEWAY_CLOSED: glColor3d(0.f/255.f, 191.f/255.f, 255.f/255.f); break; // blue for dark background
         default:            glColor3d(0.0, 0.0, 0.0); break;
       }
-      if (p.speed <= 40.0/3.6) glColor3d(0.0, 0.8, 0.8);
-      else if (p.speed <= 70.0 / 3.6) glColor3d(0.3, 0.3, 0.8);
-      else if (p.speed <= 100.0 / 3.6) glColor3d(1.0, 0.55, 0.1);
-      else glColor3d(1.0, 0.0, 0.0);
+      //uncomment to diversify color for speed
+      //if (p.speed <= 40.0/3.6) glColor3d(0.0, 0.8, 0.8);
+      //else if (p.speed <= 70.0 / 3.6) glColor3d(0.3, 0.3, 0.8);
+      //else if (p.speed <= 100.0 / 3.6) glColor3d(1.0, 0.55, 0.1);
+      //else glColor3d(1.0, 0.0, 0.0);
 
       break;
 
