@@ -106,20 +106,24 @@ int main(int argc, char **argv)
     cart c(jconf);
     c.update_degree();
 
-    if (jconf.has_member("enable_merge_subgraph") && jconf["enable_merge_subgraph"].as<bool>())
+    bool enable_merge_subgraph = jconf.has_member("enable_merge_subgraph") ? jconf["enable_merge_subgraph"].as<bool>() : false;
+    if (enable_merge_subgraph)
       c.merge_subgraph();
 
-    if (jconf.has_member("enable_remove_degree2") && jconf["enable_remove_degree2"].as<bool>())
+    bool enable_remove_degree2 = jconf.has_member("enable_remove_degree2") ? jconf["enable_remove_degree2"].as<bool>() : false;
+    if (enable_remove_degree2)
       c.remove_degree2();
 
-    if (jconf.has_member("enable_attach_nodes") && jconf["enable_attach_nodes"].as<bool>())
+    bool enable_attach_nodes = jconf.has_member("enable_attach_nodes") ? jconf["enable_attach_nodes"].as<bool>() : false;
+    if (enable_attach_nodes)
     {
       c.attach_nodes();
       c.remove_degree2();
       c.remove_shortp();
     }
 
-    if (jconf.has_member("enable_assign_level"))
+    bool enable_assign_level = jconf.has_member("enable_assign_level") ? jconf["enable_assign_level"].as<bool>() : false;
+    if (enable_assign_level)
       c.assign_level_ps(jconf["enable_assign_level"]["grid_file"].as<std::string>());
 
     if (jconf.has_member("bridge_file"))
@@ -258,7 +262,7 @@ int main(int argc, char **argv)
           pw.ilat = n->ilat;
           pw.ilon = n->ilon;
           wn = pga.second.winding_number_algo(pw.ilat, pw.ilon);
-          if (wn != 0) 
+          if (wn != 0)
             pga.second.node_in.push_back(n);
         }
       }
