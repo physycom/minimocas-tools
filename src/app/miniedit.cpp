@@ -65,7 +65,7 @@ double IsLeft(const int &ilat_0, const int &ilon_0, const int &ilat_1, const int
 
 int ace::winding_number_algo(const int ilat, const int ilon) {
   int wn = 0;    // the  winding number counter
-  for (int i = 0; i < points.size()-1; ++i) // edge from polygon[i] to  polygon[i+1]
+  for (int i = 0; i < int(points.size()-1); ++i) // edge from polygon[i] to  polygon[i+1]
   {
     if (points[i].ilon <= ilon)
     {
@@ -284,6 +284,7 @@ int main(int argc, char **argv)
     }
 
     c.dump_edited();
+    c.dump_test_config();
   }
   catch (exception &e)
   {

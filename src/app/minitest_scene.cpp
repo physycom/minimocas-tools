@@ -227,7 +227,8 @@ void gui::gl_scene::draw_dijkstra()
 // node and point
 void gui::gl_scene::draw_node_mark()
 {
-  float size = 1.0;
+  //float size = 10.0;
+  float size = 2.5;
   for (const auto &n : c->node)
     draw(n.ilon - int(0.5 * size * loneps),
          n.ilat - int(0.5 * size * lateps),
@@ -235,7 +236,8 @@ void gui::gl_scene::draw_node_mark()
          0, 0, 255,
          0.);
 
-  size = 2.0;
+  //size = 20.0;
+  size = 5.0;
   for(const auto &n1 : currentn1)
     if(n1 != c->node.end())
       draw(n1->ilon - int(0.5 * size * loneps),
@@ -509,7 +511,7 @@ void gui::gl_scene::draw_select()
     }
     catch (...)
     {
-      std::cout << "Invalid node inserted : " << selected << std::endl;
+      std::cout << "Invalid node cid inserted : " << selected << std::endl;
     }
   }
   else if (selected[0] == 'C')
@@ -523,7 +525,7 @@ void gui::gl_scene::draw_select()
     }
     catch (...)
     {
-      std::cout << "Invalid node inserted : " << selected << std::endl;
+      std::cout << "Invalid poly cid inserted : " << selected << std::endl;
     }
   }
 }

@@ -135,7 +135,7 @@ gui::gui(cart* c)
   // point projection button
   pointproj_button = new Fl_Check_Button(widget_offset_h, widget_offset_v, button_w / 3, button_h, "show point proj");
   pointproj_button->value(scene->show_pointproj_mark);
-  poly_cid_button->callback([](Fl_Widget *)
+  pointproj_button->callback([](Fl_Widget *)
   {
     scene->show_pointproj_mark = !scene->show_pointproj_mark;
     scene->reDraw = true;
@@ -226,14 +226,14 @@ gui::gui(cart* c)
 
   // poly in square button
   polyinsquare_button = new Fl_Check_Button(widget_offset_h, widget_offset_v, button_w / 3, button_h, "show poly square");
-  polyinsquare_button->value(scene->show_polyinsquare_mark);
+  //polyinsquare_button->value(scene->show_polyinsquare_mark);
   polyinsquare_button->callback([](Fl_Widget *)
   {
     scene->show_polyinsquare_mark = !scene->show_polyinsquare_mark;
     scene->reDraw = true;
   });
   polyusage_button = new Fl_Check_Button(widget_offset_h + 2 * button_w / 3, widget_offset_v, button_w / 3, button_h, "show poly usage");
-  polyusage_button->value(scene->show_polyusage);
+  //polyusage_button->value(scene->show_polyusage);
   polyusage_button->callback([](Fl_Widget *)
   {
     scene->show_polyusage = !scene->show_polyusage;
