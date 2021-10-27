@@ -104,6 +104,7 @@ int main(int argc, char **argv)
     json jconf = json::parse_file(conf);
 
     cart c(jconf);
+    std::cout << c.info() << std::endl;
     c.update_degree();
 
     bool enable_merge_subgraph = jconf.has_member("enable_merge_subgraph") ? jconf["enable_merge_subgraph"].as<bool>() : false;
