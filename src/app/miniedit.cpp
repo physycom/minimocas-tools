@@ -15,8 +15,8 @@ using namespace std;
 using namespace jsoncons;
 using namespace physycom;
 
-constexpr int MAJOR = 1;
-constexpr int MINOR = 2;
+constexpr int MAJOR = 3;
+constexpr int MINOR = 5;
 
 void usage(const char *progname)
 {
@@ -102,39 +102,63 @@ int main(int argc, char **argv)
   try
   {
     json jconf = json::parse_file(conf);
+    cart* c;
 
-    cart c(jconf);
-    std::cout << c.info() << std::endl;
-    c.update_degree();
+    try
+    {
+      c = new cart(jconf);
+      cout << c->info() << endl;
+    }
+    catch(const exception& e)
+    {
+      std::string excmsg(e.what());
+      if ( excmsg.rfind("is double") != std::string::npos)
+      {
+        cerr << "Network is malformed due to double connections, dumping purged cartography and quitting." << endl;
+        auto cartout = jconf["cartout_basename"].as<std::string>();
+        jconf["cartout_basename"] = cartout + "_purged";
+        c = new cart(jconf, true);
+        c->remove_doubleconnections();
+        c->dump_edited();
+        c->dump_edit_config(cartout);
+      }
+      else
+      {
+        cerr << e.what() << endl;
+      }
+      exit(2);
+    }
+
+    c->update_degree();
 
     bool enable_merge_subgraph = jconf.has_member("enable_merge_subgraph") ? jconf["enable_merge_subgraph"].as<bool>() : false;
     if (enable_merge_subgraph)
-      c.merge_subgraph();
+      c->merge_subgraph();
 
     bool enable_remove_degree2 = jconf.has_member("enable_remove_degree2") ? jconf["enable_remove_degree2"].as<bool>() : false;
     if (enable_remove_degree2)
-      c.remove_degree2();
+      c->remove_degree2();
 
     bool enable_attach_nodes = jconf.has_member("enable_attach_nodes") ? jconf["enable_attach_nodes"].as<bool>() : false;
     if (enable_attach_nodes)
     {
-      c.attach_nodes();
-      c.remove_degree2();
-      c.remove_shortp();
+      c->attach_nodes();
+      c->remove_degree2();
+      c->remove_shortp();
     }
 
     bool enable_assign_level = jconf.has_member("enable_assign_level") ? jconf["enable_assign_level"].as<bool>() : false;
     if (enable_assign_level)
-      c.assign_level_ps(jconf["enable_assign_level"]["grid_file"].as<std::string>());
+      c->assign_level_ps(jconf["enable_assign_level"]["grid_file"].as<std::string>());
 
     if (jconf.has_member("bridge_file"))
-      c.assign_level_bridge(jconf["bridge_file"].as<std::string>());
+      c->assign_level_bridge(jconf["bridge_file"].as<std::string>());
 
     if (jconf.has_member("enable_reduction"))
-      c.reduce_area(jconf["enable_reduction"]);
+      c->reduce_area(jconf["enable_reduction"]);
 
     if (jconf.has_member("subgraph_removal"))
-      c.remove_subgraph(jconf["subgraph_removal"]);
+      c->remove_subgraph(jconf["subgraph_removal"]);
 
     if (jconf.has_member("enable_merge_carto")) {
       auto fname = jconf["second_carto_json"].as<std::string>();
@@ -230,9 +254,9 @@ int main(int argc, char **argv)
         pga.second.score = (pga.second.population*1e4) / (float)population_total;
         std::set<node_it> node_closest;
         pga.second.ilat_max = 0;
-        pga.second.ilat_min = c.ilat_max;
+        pga.second.ilat_min = c->ilat_max;
         pga.second.ilon_max = 0;
-        pga.second.ilon_min = c.ilon_max;
+        pga.second.ilon_min = c->ilon_max;
 
         for (const auto &cord : pga.second.points) {
           if (cord.ilat > pga.second.ilat_max) pga.second.ilat_max = cord.ilat;
@@ -242,14 +266,14 @@ int main(int argc, char **argv)
         }
         int row_max, col_max;
         int row_min, col_min;
-        c.grid.coord_to_grid(pga.second.ilat_max, pga.second.ilon_max, row_max, col_max);
-        c.grid.coord_to_grid(pga.second.ilat_min, pga.second.ilon_min, row_min, col_min);
+        c->grid.coord_to_grid(pga.second.ilat_max, pga.second.ilon_max, row_max, col_max);
+        c->grid.coord_to_grid(pga.second.ilat_min, pga.second.ilon_min, row_min, col_min);
 
         for (int rw = row_min; rw < row_max; ++rw)
         {
           for (int cl = col_min; cl < col_max; ++cl)
           {
-            for (const auto &n : c.grid.grid[rw][cl].node)
+            for (const auto &n : c->grid.grid[rw][cl].node)
               node_closest.insert(n);
           }
         }
@@ -284,8 +308,8 @@ int main(int argc, char **argv)
       return 0;
     }
 
-    c.dump_edited();
-    c.dump_test_config();
+    c->dump_edited();
+    c->dump_test_config();
   }
   catch (exception &e)
   {
