@@ -84,6 +84,40 @@ int ace::winding_number_algo(const int ilat, const int ilon) {
   return wn;
 }
 
+void merge_carto(cart *c1, cart c2)
+{
+  for (auto &p1 : c1->poly)
+  {
+    std::set<int> poly_match;
+    std::vector<point_proj> pp_match;
+    //double lenght = 0.0;
+    for (auto &po1 : p1.point)
+    {
+      auto arc_near = c2.get_nearest_arc(po1);
+      if (arc_near != c2.arc.end())
+      {
+        //int poly_lid = arc_near->p->lid;
+        std::map<std::string, double> param;
+        point_proj pp = c2.project(*po1, arc_near);
+        pp_match.push_back(pp);
+        poly_match.insert(arc_near->p->lid);
+      }
+    }
+
+    if (pp_match.size() / p1.point.size() < 0.8) poly_match.clear();
+    if (poly_match.size() != 0)
+    {
+      double speed = 0.0;
+      for (auto &np : poly_match)
+      {
+        speed += c2.poly.at(np).speed;
+      }
+      speed /= poly_match.size();
+      p1.speed = speed;
+    }
+  }
+}
+
 int main(int argc, char **argv)
 {
   cout << "miniedit v" << MAJOR << "." << MINOR << endl;
@@ -112,7 +146,7 @@ int main(int argc, char **argv)
     catch(const exception& e)
     {
       std::string excmsg(e.what());
-      if ( excmsg.rfind("is double") != std::string::npos)
+      if ( excmsg.rfind("is double") != std::string::npos )
       {
         cerr << "Network is malformed due to double connections, dumping purged cartography and quitting." << endl;
         auto cartout = jconf["cartout_basename"].as<std::string>();
@@ -122,6 +156,10 @@ int main(int argc, char **argv)
         c->dump_edited();
         c->dump_edit_config(cartout);
       }
+      //else if ()
+      //{
+      //  // fix dump_edited by removing if(nF==nT) and creating a method to set edit_ok to true (see remove_doubleconnections)
+      //}
       else
       {
         cerr << e.what() << endl;
