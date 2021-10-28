@@ -24,13 +24,12 @@ void usage(const char *progname)
   cerr << "Usage: " << pn.substr(pn.find_last_of("/\\") + 1) << " path/to/json/config" << endl;
   cerr << R"(JSON CONFIG SAMPLE
 {
-  "file_pro"     : "roads.pro",      // poly properties input file
-  "file_pnt"     : "roads.pnt",      // poly geometry input file
-
+  "file_pro"              : "roads.pro",
+  "file_pnt"              : "roads.pnt",
+  "cartout_basename"      : "roads_edit",
   "enable_merge_subgraph" : false,
   "enable_remove_degree2" : false,
-  "enable_attach_nodes"   : false,
-  "enable_reduction"      : false
+  "enable_attach_nodes"   : false
 }
 )";
 }
@@ -143,27 +142,20 @@ int main(int argc, char **argv)
       c = new cart(jconf);
       cout << c->info() << endl;
     }
-    catch(const exception& e)
+    catch(const check_network_error& e)
     {
-      std::string excmsg(e.what());
-      if ( excmsg.rfind("is double") != std::string::npos )
-      {
-        cerr << "Network is malformed due to double connections, dumping purged cartography and quitting." << endl;
-        auto cartout = jconf["cartout_basename"].as<std::string>();
-        jconf["cartout_basename"] = cartout + "_purged";
-        c = new cart(jconf, true);
-        c->remove_doubleconnections();
-        c->dump_edited();
-        c->dump_edit_config(cartout);
-      }
-      //else if ()
-      //{
-      //  // fix dump_edited by removing if(nF==nT) and creating a method to set edit_ok to true (see remove_doubleconnections)
-      //}
-      else
-      {
-        cerr << e.what() << endl;
-      }
+      cerr << "Malformed network, dumping purged cartography and quitting..." << endl;
+      auto cartout = jconf["cartout_basename"].as<std::string>();
+      jconf["cartout_basename"] = cartout + "_bis";
+      c = new cart(jconf, true);
+      c->remove_doubleconnections();
+      c->dump_edited();
+      c->dump_edit_config(cartout);
+      exit(2);
+    }
+    catch(const std::exception& e)
+    {
+      cerr << "Generic exc : " << e.what() << endl;
       exit(2);
     }
 
