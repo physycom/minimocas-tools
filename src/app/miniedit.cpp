@@ -338,6 +338,9 @@ int main(int argc, char **argv)
       return 0;
     }
 
+    if (jconf.has_member("file_latlon_noturn"))
+      c->dump_noturn_file(jconf["file_latlon_noturn"].as<std::string>());
+
     c->dump_edited();
     c->dump_test_config();
   }
