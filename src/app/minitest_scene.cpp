@@ -658,6 +658,7 @@ int gui::gl_scene::handle(int event)
             currentn2.size() && currentn2.back() != c->node.end() &&
             currentn2.back() != currentn1.back() )
           dijkstra_status = c->bestpath(currentn1.back(), currentn2.back(), dijkstra_node);
+          
       }
       else
       {

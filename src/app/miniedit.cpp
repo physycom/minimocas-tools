@@ -112,7 +112,7 @@ void merge_carto(cart *c1, cart c2)
         speed += c2.poly.at(np).speed;
       }
       speed /= poly_match.size();
-      p1.speed = speed;
+      p1.speed = speed*3.6;
     }
   }
 }
@@ -193,7 +193,7 @@ int main(int argc, char **argv)
     if (jconf.has_member("enable_merge_carto")) {
       auto fname = jconf["second_carto_json"].as<std::string>();
       json jconf2 = json::parse_file(fname);
-      cart c2(jconf2);
+      cart c2(jconf2, true);
       merge_carto(c, c2);
     }
 
