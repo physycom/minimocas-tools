@@ -117,6 +117,33 @@ void merge_carto(cart *c1, cart c2)
   }
 }
 
+void attach_carto(cart *c1, cart c2)
+{
+  for (auto &n : c2.node){
+    point_base p;
+    p.ilat = n.ilat; p.ilon=n.ilon;
+    auto nn = c1->get_nearest_node(p);
+    if (nn!=c1->node.end()) {
+      for (auto &np:n.link){
+        if (n.isF(np.second)) np.second->nF->cid = nn->cid;
+        else if (n.isT(np.second)) np.second->nT->cid = nn->cid;
+      }
+    }
+  }
+  
+  std::string basename;
+  basename = "carto_attached";
+  std::ofstream editpro(basename + ".pro");
+  std::ofstream editpnt(basename + ".pnt");
+  editpro << "#poly_cid  node_front_cid  node_tail_cid  length  lvl_ps  type  width_FT  width_TF  speed  oneway  name  oneway_wheels  exclusive_FT exclusive_TF" << std::endl;
+
+  c1->dump_carto(editpro, editpnt);
+  c2.dump_carto(editpro, editpnt);
+
+  editpro.close();
+  editpnt.close();
+}
+
 int main(int argc, char **argv)
 {
   cout << "miniedit v" << MAJOR << "." << MINOR << endl;
@@ -175,6 +202,15 @@ int main(int argc, char **argv)
       c->attach_nodes();
       c->remove_degree2();
       c->remove_shortp();
+    }
+
+    bool enable_attach_cartos = jconf.has_member("enable_attach_cartos") ? jconf["enable_attach_cartos"].as<bool>() : false;
+    if (enable_attach_cartos)
+    {
+      auto fname = jconf["second_carto_json"].as<std::string>();
+      json jconf2 = json::parse_file(fname);
+      cart c2(jconf2, true);
+      attach_carto(c, c2);
     }
 
     bool enable_assign_level = jconf.has_member("enable_assign_level") ? jconf["enable_assign_level"].as<bool>() : false;
