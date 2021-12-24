@@ -120,7 +120,7 @@ int main(int argc, char** argv)
       mh.gnuplot_cdf(histodir + "/");
     }
 
-    //c.dump_poly_geojson("milano-carto");
+    c.dump_poly_geojson("milano-carto");
 
     if (jconf.has_member("enable_gui") && jconf["enable_gui"].as<bool>())
     {
