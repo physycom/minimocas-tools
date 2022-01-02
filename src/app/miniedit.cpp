@@ -117,16 +117,35 @@ void merge_carto(cart *c1, cart c2)
   }
 }
 
-void attach_carto(cart *c1, cart c2)
+void attach_carto(cart *c1, cart c2, std::map<int, std::string> stops_list)
 {
-  for (auto &n : c2.node){
-    point_base p;
-    p.ilat = n.ilat; p.ilon=n.ilon;
-    auto nn = c1->get_nearest_node(p);
-    if (nn!=c1->node.end()) {
-      for (auto &np:n.link){
-        if (n.isF(np.second)) np.second->nF->cid = nn->cid;
-        else if (n.isT(np.second)) np.second->nT->cid = nn->cid;
+  if (stops_list.size()==0)
+  {
+    for (auto &n : c2.node){
+      point_base p;
+      p.ilat = n.ilat; p.ilon=n.ilon;
+      auto nn = c1->get_nearest_node(p);
+      if (nn!=c1->node.end()) {
+        for (auto &np:n.link){
+          if (n.isF(np.second)) np.second->nF->cid = nn->cid;
+          else if (n.isT(np.second)) np.second->nT->cid = nn->cid;
+        }
+      }
+    }
+  }
+  else
+  {
+    for (auto &n : c2.node){
+      if (stops_list.find(n.cid)==stops_list.end())
+        continue;
+      point_base p;
+      p.ilat = n.ilat; p.ilon=n.ilon;
+      auto nn = c1->get_nearest_node(p);
+      if (nn!=c1->node.end()) {
+        for (auto &np:n.link){
+          if (n.isF(np.second)) np.second->nF->cid = nn->cid;
+          else if (n.isT(np.second)) np.second->nT->cid = nn->cid;
+        }
       }
     }
   }
@@ -210,7 +229,24 @@ int main(int argc, char **argv)
       auto fname = jconf["second_carto_json"].as<std::string>();
       json jconf2 = json::parse_file(fname);
       cart c2(jconf2, true);
-      attach_carto(c, c2);
+      std::map<int, std::string> sl;
+
+      if (jconf.has_member("file_stops_list"))
+      {
+        std::ifstream stops(jconf["file_stops_list"].as<std::string>());
+        if (!stops)
+          throw std::runtime_error("Stops list file not found.");
+        std::string line;
+        std::getline(stops, line); 
+        while (std::getline(stops, line))
+        {
+          std::vector<std::string> tok;
+          std::string sep = "  ";
+          physycom::split(tok, line, sep, physycom::token_compress_off);
+          sl[stoi(tok[0])] = tok[1];
+        }
+      }
+      attach_carto(c, c2, sl);
     }
 
     bool enable_assign_level = jconf.has_member("enable_assign_level") ? jconf["enable_assign_level"].as<bool>() : false;
