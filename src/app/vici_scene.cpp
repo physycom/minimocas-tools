@@ -21,7 +21,7 @@ reDraw(true),
 show_node_cid(false), show_node_lid(false), show_node_mark(true),
 show_poly_cid(false), show_poly_lid(false),
 show_grid(false), show_grid_mark(false),
-show_pawn_mark(true), show_loc_mark(false), show_route_mark(false),
+show_pawn_mark(true),
 animate_pawns(false), view_mode(MENU_VIEW_SIMPLE),
 show_attractions(true), show_sources(false), show_barriers(false), show_polygons(false),
 pawn_idx(0),
@@ -375,27 +375,6 @@ void gui::gl_scene::draw_pawn_mark()
   }
 }
 
-// draw locations
-void gui::gl_scene::draw_loc_mark()
-{
-  float size = 30.f;
-  color_palette(LIGHTBLUE);
-  for (const auto &l : s->locations)
-  {
-    draw(l.second.ilon - int(0.5 * size * loneps),
-         l.second.ilat - int(0.5 * size * lateps),
-         int(size * loneps), int(size * lateps),
-         0.5);
-    glDisable(GL_DEPTH_TEST);
-    gl_font(FL_HELVETICA, 10);
-    //gl_draw( l.first.c_str(), l.second.ilon + int(0.5*size * loneps) - iloncen, l.second.ilat + int(0.5 * size * lateps) - ilatcen);
-    glEnable(GL_DEPTH_TEST);
-    std::list<unsigned long long> poly = c->get_poly_insquare(l.second.ilat, l.second.ilon, 5.0);
-    glLineWidth(1.0);
-    for (const auto &p : poly) draw(*(c->get_poly_cid(p)));
-  }
-}
-
 // draw attractions
 void gui::gl_scene::draw_attractions()
 {
@@ -508,21 +487,6 @@ void gui::gl_scene::draw_polygons()
   }
 }
 
-// draw routes
-void gui::gl_scene::draw_route_mark()
-{
-  glPushMatrix();
-  glLineWidth(5.);
-  // node to node dijkstra
-  int route_cnt = 0;
-  for(const auto &r : s->routes)
-  {
-    color_palette(route_cnt++);
-    for(const auto &p : r.second) for(const auto &a : c->poly[p].arc) draw(*a);
-  }
-  glPopMatrix();
-}
-
 // draw scene
 void gui::gl_scene::draw_scene()
 {
@@ -542,12 +506,10 @@ void gui::gl_scene::draw_scene()
   if (show_grid)        draw_grid();
   if (show_grid_mark)   draw_grid_mark();
   if (show_pawn_mark)   draw_pawn_mark();
-  if (show_loc_mark)    draw_loc_mark();
   if (show_attractions) draw_attractions();
   if (show_sources)     draw_sources();
   if (show_barriers)    draw_barriers();
   if (show_polygons)    draw_polygons();
-  if (show_route_mark)  draw_route_mark();
   glPopMatrix();
 
   glDisable(GL_BLEND);

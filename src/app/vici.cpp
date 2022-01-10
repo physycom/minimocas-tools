@@ -61,24 +61,6 @@ int main(int argc, char** argv)
     simulation s(jconf, &c);
     std::cout << s.info() << std::endl;
 
-    // Write a json containing poly cids next to cams
-    if (jconf.has_member("enable_cid_dump") && jconf["enable_cid_dump"].as<bool>())
-    {
-      ofstream out("poly_next_to_cam.json");
-      json j = json::array();
-
-      for (const auto &l : s.locations)
-      {
-        json j_cam;
-        std::list<unsigned long long> poly_list;
-        poly_list = c.get_poly_insquare(l.second.ilat, l.second.ilon, 5.0);
-        j_cam["cam_name"] = l.first;
-        j_cam["poly_cid"] = poly_list;
-        j.push_back(j_cam);
-      }
-      out << pretty_print(j) << std::endl;
-    }
-
     // Init graphics and run
     if (jconf.has_member("enable_gui") && jconf["enable_gui"].as<bool>())
     {

@@ -282,17 +282,6 @@ int main(int argc, char** argv)
       mh.dump(); mh.gnuplot_cdf();
     }
 
-    if (jconf.has_member("bp_matrix") && jconf["bp_matrix"].as<bool>())
-    {
-      auto riga = c.dijkstra_explore(4884);
-      for (auto r : riga) cout << r << " " << endl;
-
-      cout << "Null elements : " << std::accumulate(riga.begin(), riga.end(), 0, [](int sum, int &e){
-        return sum + ((e == 0) ? 1 : 0);
-      }) << std::endl;
-    }
-
-
   }
   catch (exception &e)
   {

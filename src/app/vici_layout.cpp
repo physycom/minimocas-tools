@@ -157,20 +157,6 @@ gui::gui(cart* c, simulation* s)
     scene->show_pawn_mark = !scene->show_pawn_mark;
     scene->reDraw = true;
   });
-  loc_mark_button = new Fl_Check_Button(widget_offset_h + button_w / 3, widget_offset_v, button_w / 3, button_h, "location mark");
-  loc_mark_button->value(scene->show_loc_mark);
-  loc_mark_button->callback([](Fl_Widget *)
-  {
-    scene->show_loc_mark = !scene->show_loc_mark;
-    scene->reDraw = true;
-  });
-  route_mark_button = new Fl_Check_Button(widget_offset_h + 2 * button_w / 3, widget_offset_v, button_w / 3, button_h, "route mark");
-  route_mark_button->value(scene->show_route_mark);
-  route_mark_button->callback([](Fl_Widget *)
-  {
-    scene->show_route_mark = !scene->show_route_mark;
-    scene->reDraw = true;
-  });
   widget_offset_v += (spacing + button_h);
 
   // play button

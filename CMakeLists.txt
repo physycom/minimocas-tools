@@ -115,30 +115,30 @@ target_link_libraries(vici
   ${common_libs}
 )
 
-add_executable(vicistats
-  ${CMAKE_CURRENT_LIST_DIR}/src/app/vicistats.cpp
-)
-target_link_libraries(vicistats
-  carto
-  simulation_deps
-  Boost::system
-  Threads::Threads
-  ${common_libs}
-)
+ #add_executable(vicistats
+ #  ${CMAKE_CURRENT_LIST_DIR}/src/app/vicistats.cpp
+ #)
+ #target_link_libraries(vicistats
+ #  carto
+ #  simulation_deps
+ #  Boost::system
+ #  Threads::Threads
+ #  ${common_libs}
+ #)
 
-add_executable(miniplex
-  ${CMAKE_CURRENT_LIST_DIR}/src/app/miniplex.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/src/app/miniplex_layout.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/src/app/miniplex_scene.cpp
-)
-target_link_libraries(miniplex
-  carto
-  multiplex_deps
-  Threads::Threads
-  ${FLTK_LIBRARIES}
-  ${OPENGL_LIBRARIES}
-  ${common_libs}
-)
+#add_executable(miniplex
+#  ${CMAKE_CURRENT_LIST_DIR}/src/app/miniplex.cpp
+#  ${CMAKE_CURRENT_LIST_DIR}/src/app/miniplex_layout.cpp
+#  ${CMAKE_CURRENT_LIST_DIR}/src/app/miniplex_scene.cpp
+#)
+#target_link_libraries(miniplex
+#  carto
+#  multiplex_deps
+#  Threads::Threads
+#  ${FLTK_LIBRARIES}
+#  ${OPENGL_LIBRARIES}
+#  ${common_libs}
+#)
 
 set(WORKSPACE $ENV{WORKSPACE})
 string(REPLACE "\\" "/" WORKSPACE ${WORKSPACE})

@@ -72,7 +72,7 @@ public:
     bool show_node_cid, show_node_lid, show_node_mark;
     bool show_poly_cid, show_poly_lid;
     bool show_grid, show_grid_mark;
-    bool show_pawn_mark, show_loc_mark, show_route_mark;
+    bool show_pawn_mark;
     bool animate_pawns;
     int view_mode;
     bool show_attractions, show_sources, show_barriers, show_polygons;
@@ -95,12 +95,10 @@ public:
     void draw_grid();
     void draw_grid_mark();
     void draw_pawn_mark();
-    void draw_loc_mark();
     void draw_attractions();
     void draw_sources();
     void draw_barriers();
     void draw_polygons();
-    void draw_route_mark();
 
     // draw basic object
     template<typename... Args> void draw(const Args &...args);
