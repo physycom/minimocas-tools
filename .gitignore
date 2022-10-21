@@ -96,3 +96,6 @@ doc/Doxyfile
 doc/doxy_header.tex
 doc/build/*
 doc/*.pdf
+
+# Work Directory
+work_lavoro/
