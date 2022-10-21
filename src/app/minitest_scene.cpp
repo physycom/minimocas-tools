@@ -9,7 +9,8 @@ extern Fl_Input *select_input;
 extern gui::gl_scene *scene;
 
 constexpr double VIEW_BLANK_BOUNDARY_FACTOR = 1.2;
-constexpr double SCROLL_TO_ZOOM = 0.125;
+// constexpr double SCROLL_TO_ZOOM = 0.125;
+constexpr double SCROLL_TO_ZOOM = 0.5;
 
 #define set_color_flux_FT glColor3d(106.f/255.f, 144.f/255.f, 200.f/255.f);
 #define set_color_flux_TF glColor3d(35.f/255.f, 230.f/255.f, 200.f/255.f);
@@ -228,7 +229,8 @@ void gui::gl_scene::draw_dijkstra()
 void gui::gl_scene::draw_node_mark()
 {
   //float size = 10.0;
-  float size = 2.5;
+  // float size = 2.5;
+  float size = 1;
   for (const auto &n : c->node)
     draw(n.ilon - int(0.5 * size * loneps),
          n.ilat - int(0.5 * size * lateps),
@@ -428,7 +430,7 @@ void gui::gl_scene::draw_subgraph()
   glPushMatrix();
   for (const auto &p : c->poly)
   {
-    glLineWidth(2.);
+    glLineWidth(10.);
     if ( c->node_subgra[p.nT->lid] == c->node_subgra[p.nF->lid] && p.oneway != ONEWAY_CLOSED )
     {
       int coloridx = ( 255 * c->node_subgra[p.nT->lid]) / int(c->subgraph.size()) + 100;
@@ -464,6 +466,9 @@ void gui::gl_scene::draw_select()
     {
       int n = std::stoi(selected.substr(1));
       float size = 20.0;
+      // float size = 30.0;
+      // float size = 1;
+
       draw(c->node.at(n).ilon - int(0.5 * size * loneps),
            c->node.at(n).ilat - int(0.5 * size * lateps),
            int(size * loneps), int(size * lateps),
