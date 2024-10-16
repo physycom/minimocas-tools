@@ -207,9 +207,16 @@ int main(int argc, char **argv)
 
     c->update_degree();
 
+    bool enable_remove_roundabout = jconf.has_member("enable_remove_roundabout") ? jconf["enable_remove_roundabout"].as<bool>() : false;
+    if (enable_remove_roundabout){
+      c->remove_roundabout();
+      c->reconnect_roundabout();
+    }
+
     bool enable_merge_subgraph = jconf.has_member("enable_merge_subgraph") ? jconf["enable_merge_subgraph"].as<bool>() : false;
-    if (enable_merge_subgraph)
+    if (enable_merge_subgraph){
       c->merge_subgraph();
+    }
 
     bool enable_remove_degree2 = jconf.has_member("enable_remove_degree2") ? jconf["enable_remove_degree2"].as<bool>() : false;
     if (enable_remove_degree2)
@@ -413,6 +420,7 @@ int main(int argc, char **argv)
     if (jconf.has_member("file_latlon_noturn"))
       c->dump_noturn_file(jconf["file_latlon_noturn"].as<std::string>());
 
+   
     c->dump_edited();
     c->dump_test_config();
   }

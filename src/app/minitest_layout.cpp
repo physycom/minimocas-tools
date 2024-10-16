@@ -72,7 +72,7 @@ gui::gui(cart* c)
   // zoom button
   zoom_slider = new Fl_Value_Slider(widget_offset_h, widget_offset_v, button_w, button_h, "zoom");
   zoom_slider->type(FL_HOR_SLIDER);
-  zoom_slider->bounds(0.1, 100.0);
+  zoom_slider->bounds(0.1, 300.0);
   zoom_slider->value(scene->zoom_val);
   zoom_slider->callback([](Fl_Widget *)
   {

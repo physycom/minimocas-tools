@@ -230,7 +230,7 @@ void gui::gl_scene::draw_node_mark()
 {
   //float size = 10.0;
   // float size = 2.5;
-  float size = 1;
+  float size = 0.2;
   for (const auto &n : c->node)
     draw(n.ilon - int(0.5 * size * loneps),
          n.ilat - int(0.5 * size * lateps),
